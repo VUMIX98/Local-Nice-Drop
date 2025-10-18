@@ -1,0 +1,526 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+}
+
+.logo h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.tagline {
+    font-size: 1.3em;
+    opacity: 0.9;
+    font-weight: 300;
+    position: relative;
+}
+
+.panel {
+    padding: 40px;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 2px solid #f1f3f4;
+    border-radius: 15px;
+    background: #fafbfc;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.section:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.section h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+}
+
+/* User ID */
+.user-id {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #e1e8ed;
+}
+
+.id-display {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.4em;
+    flex: 1;
+    text-align: center;
+}
+
+.id-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Кнопки */
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background: #bdc3c7 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+    padding: 10px 15px;
+}
+
+.change-btn {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    padding: 10px 15px;
+}
+
+.discover-btn {
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+    width: 100%;
+    justify-content: center;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.send-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    width: 100%;
+    justify-content: center;
+    margin-top: 15px;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.send-btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+}
+
+/* Стили для подключений */
+.connection-status {
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #e1e8ed;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.status-online {
+    color: #1abc9c;
+    font-weight: bold;
+}
+
+.status-offline {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.status-connecting {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.connected-peer {
+    background: #e8f6f3;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.incoming-connection {
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff3cd;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+.connection-alert {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.connection-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.accept-btn {
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+    padding: 10px 20px;
+}
+
+.reject-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    padding: 10px 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Список пиров */
+.peers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.peer-item {
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #e1e8ed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.peer-item:hover {
+    border-color: #667eea;
+    transform: translateX(5px);
+}
+
+.peer-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.peer-name {
+    color: #2c3e50;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.connect-btn {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    padding: 10px 20px;
+}
+
+/* Загрузка файлов */
+.file-upload {
+    position: relative;
+    margin: 20px 0;
+}
+
+.file-input {
+    width: 100%;
+    height: 160px;
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.file-label {
+    display: block;
+    width: 100%;
+    height: 160px;
+    border: 3px dashed #bdc3c7;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #7f8c8d;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    position: relative;
+    z-index: 1;
+}
+
+.file-label:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: #f8f9ff;
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.upload-text {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.upload-hint {
+    font-size: 0.9em;
+    opacity: 0.7;
+    font-weight: normal;
+}
+
+.file-info, .incoming-files {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #e1e8ed;
+    min-height: 80px;
+}
+
+.file-transfer {
+    padding: 15px;
+    margin: 10px 0;
+    background: #e8f6f3;
+    border-left: 4px solid #1abc9c;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.3s ease;
+}
+
+.file-transfer.progress {
+    background: #fff3cd;
+    border-left-color: #ffc107;
+}
+
+.file-transfer.completed {
+    background: #e8f6f3;
+    border-left-color: #1abc9c;
+}
+
+.file-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.download-btn {
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+
+.remove-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+
+.empty-state {
+    text-align: center;
+    color: #7f8c8d;
+    padding: 30px;
+    font-style: italic;
+}
+
+.footer {
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.95em;
+}
+
+.footer strong {
+    color: #1abc9c;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .panel {
+        padding: 20px;
+    }
+    
+    .header {
+        padding: 30px 20px;
+    }
+    
+    .logo h1 {
+        font-size: 2.2em;
+    }
+    
+    .section {
+        padding: 20px;
+    }
+    
+    .user-id {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .id-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .peer-item {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .connection-buttons {
+        flex-direction: column;
+    }
+}
+
+/* Уведомления */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background: #1abc9c;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.notification.error {
+    background: #e74c3c;
+}
+
+.notification.info {
+    background: #3498db;
+}
+
+.notification.success {
+    background: #1abc9c;
+}
+
+/* Прогресс-бар для больших файлов */
+.file-transfer.progress {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #1abc9c;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-weight: bold;
+    color: #2c3e50;
+}

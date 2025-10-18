@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local-Nice-Drop</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <h1>🪂 Local-Nice-Drop</h1>
+                <p class="tagline">Кидай файлы быстро и просто!</p>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <div class="section">
+                <h3>🆔 Мое устройство:</h3>
+                <div class="user-id">
+                    <div class="device-name-display">
+                        <strong id="currentDeviceName">Мой компьютер</strong>
+                        <div class="device-id">ID: <span id="myId">Загрузка...</span></div>
+                    </div>
+                    <div class="id-buttons">
+                        <button onclick="copyId()" class="copy-btn">📋 Копировать ID</button>
+                        <button onclick="changeDeviceName()" class="change-btn">✏️ Сменить имя</button>
+                    </div>
+                </div>
+                <input type="text" id="deviceNameInput" class="device-name-input" 
+                       placeholder="Введите имя устройства" value="Мой компьютер" style="display: none;">
+                <button onclick="discoverPeers()" class="discover-btn">
+                    🔍 Найти устройства рядом
+                </button>
+            </div>
+
+            <div class="section">
+                <h3>🔗 Подключения:</h3>
+                <div id="connectionStatus" class="connection-status">
+                    <div class="status-item">
+                        <span>Статус: </span>
+                        <span id="statusText" class="status-offline">Не подключен</span>
+                    </div>
+                    <div id="connectedPeer" class="connected-peer hidden">
+                        <span>Подключен к: </span>
+                        <strong id="connectedPeerId"></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>📱 Доступные устройства:</h3>
+                <div id="peersList" class="peers-list">
+                    <div class="empty-state">Нажми "Найти устройства" чтобы увидеть кто онлайн</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>📤 Отправить файл:</h3>
+                <div class="file-upload">
+                    <input type="file" id="fileInput" class="file-input">
+                    <label for="fileInput" class="file-label">
+                        <div class="upload-icon">📁</div>
+                        <div class="upload-text">Выбери файл или перетащи сюда</div>
+                        <div class="upload-hint">Поддержка файлов любого размера</div>
+                    </label>
+                </div>
+                <button onclick="sendFile()" disabled id="sendBtn" class="send-btn">
+                    ⏳ Выберите устройство и файл
+                </button>
+                <div id="fileInfo" class="file-info"></div>
+            </div>
+
+            <div class="section">
+                <h3>📥 Входящие файлы:</h3>
+                <div id="incomingFiles" class="incoming-files">
+                    <div class="empty-state">Здесь появятся файлы от других устройств</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🪂 <strong>Nice-Drop</strong> - Просто кинь и всё! 🎯</p>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+
+    <style>
+    @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    .device-name-display {
+        flex: 1;
+        text-align: center;
+    }
+
+    .device-name-display strong {
+        font-size: 1.2em;
+        color: #2c3e50;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .device-id {
+        font-size: 0.9em;
+        color: #7f8c8d;
+    }
+
+    .device-name-input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #bdc3c7;
+        border-radius: 8px;
+        font-size: 1em;
+    }
+
+    .peer-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .peer-name {
+        font-weight: bold;
+        color: #2c3e50;
+        font-size: 1.1em;
+    }
+
+    .peer-status {
+        font-size: 0.8em;
+        color: #1abc9c;
+        font-weight: 500;
+    }
+
+    .file-label.dragover {
+        border-color: #667eea;
+        background: #f8f9ff;
+        transform: scale(1.02);
+    }
+
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background: #1abc9c;
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 1000;
+        animation: slideInRight 0.3s ease;
+        font-weight: 500;
+    }
+
+    .notification.error {
+        background: #e74c3c;
+    }
+
+    .notification.info {
+        background: #3498db;
+    }
+
+    .notification.success {
+        background: #1abc9c;
+    }
+
+    .file-transfer {
+        padding: 15px;
+        margin: 10px 0;
+        background: #e8f6f3;
+        border-left: 4px solid #1abc9c;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        animation: slideInRight 0.3s ease;
+    }
+
+    .file-transfer.progress {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+    }
+
+    .file-transfer .file-details {
+        flex: 1;
+    }
+
+    .file-transfer .file-details strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #2c3e50;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 6px;
+        background: #e9ecef;
+        border-radius: 3px;
+        margin-top: 8px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #1abc9c;
+        transition: width 0.3s ease;
+    }
+
+    .progress-text {
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .peer-item.selected {
+        border-color: #667eea;
+        background: rgba(102, 126, 234, 0.1);
+    }
+    </style>
+</body>
+</html>
